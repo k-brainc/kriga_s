@@ -20,7 +20,7 @@
             padding: 40px 30px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-top: 8px solid #673ab7; /* 구글 폼 스타일의 포인트 컬러 */
+            border-top: 8px solid #673ab7;
         }
         h1 {
             text-align: center;
@@ -244,8 +244,8 @@
         document.getElementById('surveyForm').addEventListener('submit', function(e) {
             e.preventDefault(); // 기본 폼 제출 동작(새로고침) 막기
             
-            // ★ 아래 URL을 구글 앱스 스크립트에서 복사한 '웹앱 URL'로 반드시 변경해야 합니다! ★
-            const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL';
+            // ★ 제공해주신 웹앱 URL이 적용되었습니다 ★
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbzijRg6yTDnZ2xaNok5FNWmG4XCSYGtj7zSaDsul2xWEIGTMNlLN57zQR34qoAQaWbO/exec';
             
             if (scriptURL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL') {
                 alert('연동 오류: HTML 코드 내의 scriptURL에 구글 앱스 스크립트 URL을 입력해야 작동합니다.');
