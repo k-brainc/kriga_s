@@ -244,29 +244,28 @@ const CONFIG = {
   REFRESH_INTERVAL_SEC: 30,
 
   // 내부 필드 ↔ 실제 시트 헤더(1행) 이름 매핑
-  // 아래는 실제 시트(K예술영재_무용_설문 / 시트1)의 헤더를 그대로 반영한 값입니다.
-  // ※ 생활멘토·안전·편의(Movement3), 사전안내·소통(Movement4), 재참여·추천 의향(Movement9)은
-  //   현재 시트에 해당 컬럼이 없어 데이터가 비어 있습니다. 설문 백엔드(Apps Script)가
-  //   이 필드들을 저장하도록 업데이트되면, 아래 매핑에 실제 헤더명을 넣어주세요.
+  // 시트 헤더가 설문 문항 번호(1, 2-1~2-4, 3-1~3-3, 4-1~4-2, 5, 6, 7, 8, 9-1~9-2, 10)로
+  // 재구성되어 있다는 가정으로 반영했습니다. 실제 헤더 텍스트가 다르면(예: 구글시트가
+  // "2-1"을 날짜로 자동 변환한 경우) 아래 오른쪽 값만 실제 헤더 텍스트로 바꿔주세요.
   FIELD_MAP: {
     timestamp:        '타임스탬프',
-    class:            '수강반',
-    m2_content:        '내용 및 구성',
-    m2_instructor:     '강사진 지도',
-    m2_duration:       '교육기간',
-    m2_facility:       '환경 및 운영',
-    m3_mentor:         '생활멘토 돌봄',      // 시트에 컬럼 없음 → 자동으로 데이터 없음 처리
-    m3_safety:         '안전관리',          // 시트에 컬럼 없음 → 자동으로 데이터 없음 처리
-    m3_meal:           '식사 및 휴게공간',    // 시트에 컬럼 없음 → 자동으로 데이터 없음 처리
-    m4_precomm:        '사전 안내',         // 시트에 컬럼 없음 → 자동으로 데이터 없음 처리
-    m4_parentcomm:     '학부모 소통',        // 시트에 컬럼 없음 → 자동으로 데이터 없음 처리
-    best_subject:      '최고의 과목',
-    reason:            '좋았던 이유',
-    future_subject:    '심화과정 희망',
-    artist:            '아티스트 추천',
-    m9_reapply:        '재참여 의향',        // 시트에 컬럼 없음 → 자동으로 데이터 없음 처리
-    m9_recommend:      '추천 의향',         // 시트에 컬럼 없음 → 자동으로 데이터 없음 처리
-    feedback:          '개선 및 건의사항'
+    class:            '1',
+    m2_content:        '2-1',
+    m2_instructor:     '2-2',
+    m2_duration:       '2-3',
+    m2_facility:       '2-4',
+    m3_mentor:         '3-1',
+    m3_safety:         '3-2',
+    m3_meal:           '3-3',
+    m4_precomm:        '4-1',
+    m4_parentcomm:     '4-2',
+    best_subject:      '5',
+    reason:            '6',
+    future_subject:    '7',
+    artist:            '8',
+    m9_reapply:        '9-1',
+    m9_recommend:      '9-2',
+    feedback:          '10'
   }
 };
 /* ============================================================ */
@@ -551,7 +550,7 @@ function showSetupNotice(message){
       <li>시트 오른쪽 상단 <b>공유</b> → "링크가 있는 모든 사용자" → <b>뷰어</b> 권한으로 설정합니다. (실시간 조회를 위해 필요, 편집 권한 아님)</li>
       <li>파일을 저장하고 새로고침하면 자동으로 연결됩니다.</li>
     </ol>
-    <p>실제 시트의 첫 번째 행(헤더)이 설문 폼의 필드명(예: <code>q1_content</code>)과 다르면, <code>FIELD_MAP</code>의 오른쪽 값을 실제 헤더 텍스트로 바꿔주세요.</p>
+    <p>실제 시트의 첫 번째 행(헤더)이 문항 번호(예: <code>2-1</code>)와 다르게 표시되어 있다면(예: 날짜로 자동 변환된 경우), <code>FIELD_MAP</code>의 오른쪽 값을 실제 헤더 텍스트로 바꿔주세요.</p>
   `;
 }
 
@@ -567,7 +566,7 @@ async function loadData(isManual){
 
   try{
     const raw = await fetchSheet();
-    allRows = raw.map(mapRow);
+    allRows = raw.map(mapRow).filter(r => Object.values(r).some(v => v !== '' && v !== null && v !== undefined));
   }catch(err){
     console.error(err);
     showSetupNotice(err.message || '데이터를 불러오지 못했습니다.');
