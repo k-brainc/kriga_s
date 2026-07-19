@@ -210,6 +210,7 @@
 
   /* ---------- radio (large tap cards) ---------- */
   .radio-group{display:flex; flex-direction:column; gap:14px;}
+  .radio-group + .radio-group{margin-top:14px;}
   .radio-group label{
     display:flex; align-items:center; gap:16px;
     padding:22px 22px;
@@ -518,9 +519,17 @@
           <div class="m-head"><span class="m-num">05</span><span class="m-tag">Movement</span><span class="m-rule"></span></div>
           <p class="m-title">가장 만족스러웠던 과목은 무엇입니까?</p>
           <p class="m-desc">해당하는 과목을 모두 선택해주세요. (중복 선택 가능)</p>
-          <div class="radio-group" data-required-group="q3_best_subject">
+          <div class="radio-group" data-required-group="q3_best_subject" data-class-options="A반 (초등)">
             <label><input type="checkbox" name="q3_best_subject" value="발레 클라스 및 레파토리 (나디아 교수)"> 발레 클라스 및 레파토리 (나디아 교수)</label>
-            <label><input type="checkbox" name="q3_best_subject" value="발레 클라스 및 레파토리 (이은원/이수빈/채지영 교수)"> 발레 클라스 및 레파토리 (이은원/이수빈/채지영 교수)</label>
+            <label><input type="checkbox" name="q3_best_subject" value="발레 클라스 및 레파토리 (채지영 교수)"> 발레 클라스 및 레파토리 (채지영 교수)</label>
+          </div>
+          <div class="radio-group" data-required-group="q3_best_subject" data-class-options="B반 (중·고등)" style="display:none;">
+            <label><input type="checkbox" name="q3_best_subject" value="발레 클라스 및 레파토리 (나디아 교수)"> 발레 클라스 및 레파토리 (나디아 교수)</label>
+            <label><input type="checkbox" name="q3_best_subject" value="발레 클라스 및 레파토리 (이은원 교수)"> 발레 클라스 및 레파토리 (이은원 교수)</label>
+            <label><input type="checkbox" name="q3_best_subject" value="발레 클라스 및 레파토리 (이수빈 교수)"> 발레 클라스 및 레파토리 (이수빈 교수)</label>
+            <label><input type="checkbox" name="q3_best_subject" value="발레 클라스 및 레파토리 (채지영 교수)"> 발레 클라스 및 레파토리 (채지영 교수)</label>
+          </div>
+          <div class="radio-group" data-common-subjects>
             <label><input type="checkbox" name="q3_best_subject" value="발레 클라스의 역사 (정옥희 교수)"> 발레 클라스의 역사 (정옥희 교수)</label>
             <label><input type="checkbox" name="q3_best_subject" value="피지컬 트레이닝 (이대훈 교수)"> 피지컬 트레이닝 (이대훈 교수)</label>
           </div>
@@ -542,7 +551,7 @@
         <div class="movement">
           <span class="corner corner-tl small"></span><span class="corner corner-tr small"></span><span class="corner corner-bl small"></span><span class="corner corner-br small"></span>
           <div class="m-head"><span class="m-num">07</span><span class="m-tag">Movement</span><span class="m-rule"></span></div>
-          <p class="m-title">추후 심화 과정에서 배우고 싶은 무용 분야나 세부 과목은 무엇입니까?</p>
+          <p class="m-title">추후 겨울캠프에서 배우고 싶은 무용 분야나 세부 과목은 무엇입니까?</p>
           <p class="m-desc">예: 현대무용, 발레 바리에이션, 무용 해부학, 한국무용 등</p>
           <textarea name="q5_future_subject" placeholder="자유롭게 작성해주세요."></textarea>
         </div>
@@ -553,7 +562,7 @@
         <div class="movement">
           <span class="corner corner-tl small"></span><span class="corner corner-tr small"></span><span class="corner corner-bl small"></span><span class="corner corner-br small"></span>
           <div class="m-head"><span class="m-num">08</span><span class="m-tag">Movement</span><span class="m-rule"></span></div>
-          <p class="m-title">향후 워크숍에서 꼭 만나보고 싶은 국내외 아티스트가 있다면 추천해주세요.</p>
+          <p class="m-title">향후 겨울캠프에서 꼭 만나보고 싶은 국내외 아티스트가 있다면 추천해주세요.</p>
           <p class="m-desc">예: 국립발레단 수석무용수, 해외 안무가, 무용 심리학자 등</p>
           <textarea name="q6_artist" placeholder="자유롭게 작성해주세요."></textarea>
         </div>
@@ -652,11 +661,31 @@
     });
   });
 
+  // Movement 5: show subject options that match the class selected in Movement 1
+  const subjectGroups = document.querySelectorAll('[data-class-options]');
+  function syncSubjectOptions(){
+    const selectedClass = document.querySelector('input[name="q2_class"]:checked');
+    const selectedValue = selectedClass ? selectedClass.value : null;
+    subjectGroups.forEach(group=>{
+      const matches = group.getAttribute('data-class-options') === selectedValue;
+      group.style.display = matches ? '' : 'none';
+      group.querySelectorAll('input[type="checkbox"]').forEach(cb=>{
+        if(!matches){ cb.checked = false; }
+        cb.disabled = !matches;
+      });
+    });
+  }
+  document.querySelectorAll('input[name="q2_class"]').forEach(r=>{
+    r.addEventListener('change', syncSubjectOptions);
+  });
+  syncSubjectOptions();
+
   function showSlide(index){
     slides.forEach((s,i)=>{
       s.classList.toggle('active', i===index);
     });
     current = index;
+    syncSubjectOptions();
 
     const lastContentIndex = slides.length - 2;
     let pct;
