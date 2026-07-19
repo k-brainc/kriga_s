@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>워크숍 만족도 설문조사</title>
+    <style>
+        body {
+            font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px 10px;
+            margin: 0;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-top: 8px solid #673ab7; /* 구글 폼 스타일의 포인트 컬러 */
+        }
+        h1 {
+            text-align: center;
+            color: #202124;
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+        .question-group {
+            margin-bottom: 35px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e8eaed;
+        }
+        .question-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: #202124;
+        }
+        .description {
+            font-size: 0.9em;
+            color: #5f6368;
+            margin-bottom: 15px;
+            margin-top: -10px;
+        }
+        
+        /* 척도형 테이블 스타일 */
+        .scale-table-container {
+            overflow-x: auto;
+        }
+        .scale-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            min-width: 500px;
+        }
+        .scale-table th, .scale-table td {
+            border: 1px solid #dadce0;
+            padding: 12px;
+            text-align: center;
+        }
+        .scale-table th {
+            background-color: #f1f3f4;
+            font-weight: 500;
+            font-size: 0.9em;
+        }
+        .scale-table td.item-name {
+            text-align: left;
+            font-weight: 500;
+            width: 40%;
+        }
+        
+        /* 객관식 스타일 */
+        .radio-option {
+            display: block;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .radio-option input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        /* 주관식 스타일 */
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 12px;
+            border: 1px solid #dadce0;
+            border-radius: 6px;
+            resize: vertical;
+            font-family: inherit;
+            box-sizing: border-box;
+            font-size: 1em;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #673ab7;
+            box-shadow: 0 0 0 2px rgba(103, 58, 183, 0.2);
+        }
+
+        /* 버튼 스타일 */
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #673ab7;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #5e35b1;
+        }
+        
+        /* 로딩 오버레이 */
+        #loading {
+            display: none;
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #673ab7;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>무용 워크숍 만족도 설문조사</h1>
+        
+        <form id="surveyForm">
+            
+            <!-- 1번 문항 (척도형) -->
+            <div class="question-group">
+                <div class="question-title">1. 프로그램 전반에 대한 만족도를 평가해주세요.</div>
+                <div class="description">(1점: 매우 불만족 ~ 5점: 매우 만족)</div>
+                <div class="scale-table-container">
+                    <table class="scale-table">
+                        <thead>
+                            <tr>
+                                <th>항목</th>
+                                <th>1점</th>
+                                <th>2점</th>
+                                <th>3점</th>
+                                <th>4점</th>
+                                <th>5점</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="item-name">프로그램 내용 및 구성이 유익했습니까?</td>
+                                <td><input type="radio" name="q1_content" value="1" required></td>
+                                <td><input type="radio" name="q1_content" value="2"></td>
+                                <td><input type="radio" name="q1_content" value="3"></td>
+                                <td><input type="radio" name="q1_content" value="4"></td>
+                                <td><input type="radio" name="q1_content" value="5"></td>
+                            </tr>
+                            <tr>
+                                <td class="item-name">강사진의 지도 방식은 만족스러웠습니까?</td>
+                                <td><input type="radio" name="q1_instructor" value="1" required></td>
+                                <td><input type="radio" name="q1_instructor" value="2"></td>
+                                <td><input type="radio" name="q1_instructor" value="3"></td>
+                                <td><input type="radio" name="q1_instructor" value="4"></td>
+                                <td><input type="radio" name="q1_instructor" value="5"></td>
+                            </tr>
+                            <tr>
+                                <td class="item-name">교육 기간(3일)은 적절했습니까?</td>
+                                <td><input type="radio" name="q1_duration" value="1" required></td>
+                                <td><input type="radio" name="q1_duration" value="2"></td>
+                                <td><input type="radio" name="q1_duration" value="3"></td>
+                                <td><input type="radio" name="q1_duration" value="4"></td>
+                                <td><input type="radio" name="q1_duration" value="5"></td>
+                            </tr>
+                            <tr>
+                                <td class="item-name">전반적인 운영 및 환경(시설/진행)은 어떠했습니까?</td>
+                                <td><input type="radio" name="q1_facility" value="1" required></td>
+                                <td><input type="radio" name="q1_facility" value="2"></td>
+                                <td><input type="radio" name="q1_facility" value="3"></td>
+                                <td><input type="radio" name="q1_facility" value="4"></td>
+                                <td><input type="radio" name="q1_facility" value="5"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 2번 문항 (객관식) -->
+            <div class="question-group">
+                <div class="question-title">2. 수강하신 반을 선택해주세요.</div>
+                <label class="radio-option"><input type="radio" name="q2_class" value="A반 (초등)" required> A반 (초등)</label>
+                <label class="radio-option"><input type="radio" name="q2_class" value="B반 (중·고등)"> B반 (중·고등)</label>
+            </div>
+
+            <!-- 3번 문항 (객관식) -->
+            <div class="question-group">
+                <div class="question-title">3. 가장 만족스러웠던 과목은 무엇입니까?</div>
+                <label class="radio-option"><input type="radio" name="q3_best_subject" value="발레 클라스 및 레파토리 (나디아 교수)" required> 발레 클라스 및 레파토리 (나디아 교수)</label>
+                <label class="radio-option"><input type="radio" name="q3_best_subject" value="발레 클라스 및 레파토리 (이은원/이수빈/채지영 교수)"> 발레 클라스 및 레파토리 (이은원/이수빈/채지영 교수)</label>
+                <label class="radio-option"><input type="radio" name="q3_best_subject" value="발레 클라스의 역사 (정옥희 교수)"> 발레 클라스의 역사 (정옥희 교수)</label>
+                <label class="radio-option"><input type="radio" name="q3_best_subject" value="피지컬 트레이닝 (이대훈 교수)"> 피지컬 트레이닝 (이대훈 교수)</label>
+            </div>
+
+            <!-- 4번 문항 (장문형) -->
+            <div class="question-group">
+                <div class="question-title">4. 해당 과목이 좋았던 이유는 무엇입니까?</div>
+                <textarea name="q4_reason" placeholder="자유롭게 작성해주세요." required></textarea>
+            </div>
+
+            <!-- 5번 문항 (장문형) -->
+            <div class="question-group">
+                <div class="question-title">5. 추후 심화 과정에서 배우고 싶은 무용 분야나 세부 과목은 무엇입니까?</div>
+                <div class="description">(예: 현대무용, 발레 바리에이션, 무용 해부학, 한국무용 등)</div>
+                <textarea name="q5_future_subject" placeholder="자유롭게 작성해주세요."></textarea>
+            </div>
+
+            <!-- 6번 문항 (장문형) -->
+            <div class="question-group">
+                <div class="question-title">6. 향후 워크숍에서 꼭 만나보고 싶은 국내외 아티스트가 있다면 추천해주세요.</div>
+                <div class="description">(예: 국립발레단 수석무용수, 해외 안무가, 무용 심리학자 등)</div>
+                <textarea name="q6_artist" placeholder="자유롭게 작성해주세요."></textarea>
+            </div>
+
+            <!-- 7번 문항 (장문형) -->
+            <div class="question-group">
+                <div class="question-title">7. 기타 본 프로그램에 대한 개선점이나 건의사항이 있다면 자유롭게 작성해주세요.</div>
+                <textarea name="q7_feedback" placeholder="개선점이나 건의사항을 자유롭게 작성해주세요."></textarea>
+            </div>
+
+            <button type="submit" id="submitBtn">설문 제출하기</button>
+            <div id="loading">제출 중입니다. 잠시만 기다려주세요...</div>
+        </form>
+
+    </div>
+
+    <script>
+        document.getElementById('surveyForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // 기본 폼 제출 동작(새로고침) 막기
+            
+            // ★ 아래 URL을 구글 앱스 스크립트에서 복사한 '웹앱 URL'로 반드시 변경해야 합니다! ★
+            const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL';
+            
+            if (scriptURL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL') {
+                alert('연동 오류: HTML 코드 내의 scriptURL에 구글 앱스 스크립트 URL을 입력해야 작동합니다.');
+                return;
+            }
+
+            const form = document.forms['surveyForm'];
+            const btn = document.getElementById('submitBtn');
+            const loading = document.getElementById('loading');
+
+            btn.style.display = 'none';
+            loading.style.display = 'block';
+
+            // FormData 객체를 이용해 입력된 데이터 수집
+            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                .then(response => {
+                    alert('설문이 성공적으로 제출되었습니다. 참여해주셔서 감사합니다!');
+                    form.reset(); // 폼 초기화
+                    btn.style.display = 'block';
+                    loading.style.display = 'none';
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    alert('제출 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+                    btn.style.display = 'block';
+                    loading.style.display = 'none';
+                });
+        });
+    </script>
+</body>
+</html>
