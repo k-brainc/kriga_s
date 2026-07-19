@@ -11,19 +11,10 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
   :root{
-    --navy:#2f4f62;
-    --navy-deep:#1f3746;
-    --gold:#eec97a;
-    --gold-soft:#f5dda3;
-    --gold-deep:#c9973f;
-    --cream:#faf7ef;
-    --card:#ffffff;
-    --ink:#211d1a;
-    --ink-soft:#6b6459;
-    --line:#e7ddc4;
-    --good:#5c8a68;
-    --warn:#c9973f;
-    --bad:#b3564a;
+    --navy:#2f4f62; --navy-deep:#1f3746;
+    --gold:#eec97a; --gold-soft:#f5dda3; --gold-deep:#c9973f;
+    --cream:#faf7ef; --card:#ffffff;
+    --ink:#211d1a; --ink-soft:#6b6459; --line:#e7ddc4;
     --shadow: 0 18px 40px -20px rgba(31,55,70,0.28);
     --serif-kr:'Noto Serif KR', serif;
     --serif-en:'Cormorant Garamond', serif;
@@ -36,129 +27,94 @@
   }
   a{color:inherit;}
 
-  /* ---------- topbar ---------- */
   header.topbar{
     background:linear-gradient(160deg, var(--navy), var(--navy-deep));
     color:#fff; padding:22px 28px; position:sticky; top:0; z-index:50;
     box-shadow:0 8px 24px -12px rgba(0,0,0,0.4);
   }
-  .topbar-inner{
-    max-width:1240px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;
-  }
+  .topbar-inner{ max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; }
   .brand{display:flex; flex-direction:column; gap:4px;}
-  .brand .eyebrow{
-    font-family:var(--sans); font-weight:700; letter-spacing:.28em; text-transform:uppercase;
-    font-size:11px; color:var(--gold);
-  }
-  .brand h1{
-    font-family:var(--serif-kr); font-weight:700; font-size:22px; margin:0; color:#fff;
-  }
+  .brand .eyebrow{ font-weight:700; letter-spacing:.28em; text-transform:uppercase; font-size:11px; color:var(--gold); }
+  .brand h1{ font-family:var(--serif-kr); font-weight:700; font-size:21px; margin:0; color:#fff; }
   .status{display:flex; align-items:center; gap:16px; flex-wrap:wrap;}
-  .live-badge{
-    display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--gold-soft);
-    font-weight:600; letter-spacing:.04em;
-  }
-  .live-dot{
-    width:8px; height:8px; border-radius:50%; background:#6fd18a;
-    box-shadow:0 0 0 0 rgba(111,209,138,0.6);
-    animation:pulse 1.8s infinite;
-  }
-  @keyframes pulse{
-    0%{box-shadow:0 0 0 0 rgba(111,209,138,0.6);}
-    70%{box-shadow:0 0 0 8px rgba(111,209,138,0);}
-    100%{box-shadow:0 0 0 0 rgba(111,209,138,0);}
-  }
+  .live-badge{ display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--gold-soft); font-weight:600; }
+  .live-dot{ width:8px; height:8px; border-radius:50%; background:#6fd18a; animation:pulse 1.8s infinite; }
+  @keyframes pulse{ 0%{box-shadow:0 0 0 0 rgba(111,209,138,.6);} 70%{box-shadow:0 0 0 8px rgba(111,209,138,0);} 100%{box-shadow:0 0 0 0 rgba(111,209,138,0);} }
   .updated-text{font-size:12px; color:#b7c3ca;}
   button.refresh-btn{
-    font-family:var(--sans); font-weight:600; font-size:13px;
-    background:rgba(238,201,122,0.14); color:var(--gold-soft);
-    border:1px solid rgba(238,201,122,0.4); border-radius:20px;
-    padding:8px 16px; cursor:pointer; transition:background .2s, transform .2s;
-    display:flex; align-items:center; gap:6px;
+    font-weight:600; font-size:13px; background:rgba(238,201,122,.14); color:var(--gold-soft);
+    border:1px solid rgba(238,201,122,.4); border-radius:20px; padding:8px 16px; cursor:pointer;
+    display:flex; align-items:center; gap:6px; transition:background .2s, transform .2s;
   }
-  button.refresh-btn:hover{background:rgba(238,201,122,0.24); transform:translateY(-1px);}
-  button.refresh-btn:active{transform:translateY(0);}
+  button.refresh-btn:hover{background:rgba(238,201,122,.24); transform:translateY(-1px);}
   button.refresh-btn svg{width:14px; height:14px;}
   button.refresh-btn.spinning svg{animation:spin .8s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg);}}
 
-  /* ---------- layout ---------- */
-  main{max-width:1240px; margin:0 auto; padding:28px;}
+  main{max-width:1100px; margin:0 auto; padding:28px;}
 
   .setup-panel{
     background:var(--card); border:1px solid var(--line); border-left:4px solid var(--gold-deep);
-    border-radius:2px; padding:28px 30px; box-shadow:var(--shadow); margin-bottom:24px;
+    padding:28px 30px; box-shadow:var(--shadow); margin-bottom:24px;
   }
   .setup-panel h2{font-family:var(--serif-kr); font-size:18px; margin:0 0 10px;}
   .setup-panel p{font-size:13.5px; color:var(--ink-soft); line-height:1.8; margin:0 0 10px;}
-  .setup-panel ol{font-size:13.5px; color:var(--ink); line-height:2; padding-left:20px; margin:0 0 12px;}
-  .setup-panel code{
-    background:var(--cream); border:1px solid var(--line); border-radius:4px;
-    padding:1px 7px; font-size:12.5px; color:var(--navy-deep);
-  }
-  .setup-panel .err{color:var(--bad); font-weight:600; font-size:13px;}
+  .setup-panel ol{font-size:13.5px; line-height:2; padding-left:20px; margin:0 0 12px;}
+  .setup-panel code{background:var(--cream); border:1px solid var(--line); border-radius:4px; padding:1px 7px; font-size:12.5px; color:var(--navy-deep);}
+  .setup-panel .err{color:#b3564a; font-weight:600; font-size:13px;}
 
-  section.block{margin-bottom:30px;}
-  .block-title{
-    display:flex; align-items:center; gap:12px; margin:0 0 16px;
-  }
-  .block-title .dot{width:9px; height:9px; border-radius:50%; background:var(--gold-deep); flex:none;}
-  .block-title h2{font-family:var(--serif-kr); font-weight:700; font-size:17px; margin:0; color:var(--ink);}
-  .block-title .sub{font-size:12px; color:var(--ink-soft); margin-left:auto;}
-
-  /* summary cards */
-  .cards-row{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px;}
+  /* overview */
+  .overview-row{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:14px; margin-bottom:34px;}
   .stat-card{
-    background:var(--card); border:1px solid var(--line); border-radius:2px; padding:20px 22px;
-    box-shadow:var(--shadow); position:relative; overflow:hidden;
+    background:var(--card); border:1px solid var(--line); padding:18px 20px; box-shadow:var(--shadow);
+    position:relative; overflow:hidden;
   }
-  .stat-card::before{
-    content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--gold);
-  }
-  .stat-label{font-size:12px; color:var(--ink-soft); margin-bottom:8px; font-weight:600;}
-  .stat-value{font-family:var(--serif-en); font-size:32px; font-weight:700; color:var(--navy); line-height:1;}
-  .stat-value small{font-family:var(--sans); font-size:14px; color:var(--ink-soft); font-weight:500; margin-left:4px;}
-  .stat-sub{font-size:11.5px; color:var(--ink-soft); margin-top:8px;}
+  .stat-card::before{content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--gold);}
+  .stat-label{font-size:11.5px; color:var(--ink-soft); margin-bottom:6px; font-weight:600;}
+  .stat-value{font-family:var(--serif-en); font-size:28px; font-weight:700; color:var(--navy); line-height:1;}
+  .stat-value small{font-family:var(--sans); font-size:13px; color:var(--ink-soft); font-weight:500; margin-left:4px;}
 
-  /* charts grid */
-  .charts-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(360px,1fr)); gap:18px;}
-  .chart-card{
-    background:var(--card); border:1px solid var(--line); border-radius:2px; padding:22px;
-    box-shadow:var(--shadow);
+  /* movement section = the core organizing unit, one per survey Movement */
+  .m-section{ margin-bottom:30px; }
+  .m-head{ display:flex; align-items:center; gap:12px; margin-bottom:4px; }
+  .m-badge{
+    width:34px; height:34px; border-radius:50%; flex:none;
+    background:var(--navy); border:1.5px solid var(--gold); color:var(--gold);
+    font-family:var(--serif-en); font-weight:700; font-size:13px;
+    display:flex; align-items:center; justify-content:center;
   }
-  .chart-card h3{font-family:var(--serif-kr); font-size:15px; margin:0 0 4px; color:var(--ink);}
-  .chart-card .desc{font-size:12px; color:var(--ink-soft); margin:0 0 14px;}
-  .chart-card canvas{max-height:260px;}
+  .m-eyebrow{ font-weight:700; letter-spacing:.14em; font-size:10.5px; color:var(--navy); text-transform:uppercase; }
+  .m-question{ font-family:var(--serif-kr); font-weight:700; font-size:16.5px; margin:6px 0 16px 46px; color:var(--ink); line-height:1.5; }
 
-  /* responses */
+  .m-card{
+    background:var(--card); border:1px solid var(--line); padding:22px 24px; box-shadow:var(--shadow);
+    margin-left:0;
+  }
+  .m-card canvas{max-height:230px;}
+  .sub-question{font-size:12.5px; color:var(--ink-soft); margin:0 0 2px;}
+
+  .no-data{padding:34px; text-align:center; color:var(--ink-soft); font-size:13px;}
+
+  /* text-response movements (6,7,8,10) shown as tabs */
   .tabs{display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap;}
   .tab-btn{
-    font-family:var(--sans); font-size:12.5px; font-weight:600; padding:8px 16px;
-    border:1px solid var(--line); background:var(--cream); color:var(--ink-soft);
-    border-radius:20px; cursor:pointer; transition:all .2s;
+    font-size:12.5px; font-weight:600; padding:8px 16px; border:1px solid var(--line);
+    background:var(--cream); color:var(--ink-soft); border-radius:20px; cursor:pointer; transition:all .2s;
   }
   .tab-btn.active{background:var(--navy); color:#fff; border-color:var(--navy);}
-  .response-list{
-    background:var(--card); border:1px solid var(--line); border-radius:2px;
-    box-shadow:var(--shadow); max-height:420px; overflow-y:auto;
-  }
-  .response-item{
-    padding:16px 22px; border-bottom:1px solid var(--line); font-size:13.5px; line-height:1.7;
-  }
+  .response-list{ background:var(--card); border:1px solid var(--line); box-shadow:var(--shadow); max-height:380px; overflow-y:auto; }
+  .response-item{ padding:15px 22px; border-bottom:1px solid var(--line); font-size:13.5px; line-height:1.7; }
   .response-item:last-child{border-bottom:none;}
-  .response-item .meta{display:flex; gap:10px; margin-bottom:6px; font-size:11px; color:var(--gold-deep); font-weight:700;}
-  .response-item .empty-note{color:var(--ink-soft); font-style:italic;}
-  .no-data{padding:40px; text-align:center; color:var(--ink-soft); font-size:13px;}
 
-  footer.note{
-    text-align:center; padding:30px 20px; font-size:12px; color:var(--ink-soft);
-    font-family:var(--serif-en); font-style:italic;
-  }
+  .two-col{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  @media (max-width:760px){ .two-col{grid-template-columns:1fr;} }
+
+  footer.note{ text-align:center; padding:30px 20px; font-size:12px; color:var(--ink-soft); font-family:var(--serif-en); font-style:italic; }
 
   @media (max-width:640px){
-    header.topbar{padding:16px 18px;}
-    main{padding:16px;}
-    .stat-value{font-size:26px;}
+    header.topbar{padding:16px 18px;} main{padding:16px;}
+    .m-question{margin-left:0;}
+    .stat-value{font-size:24px;}
   }
 </style>
 </head>
@@ -183,45 +139,66 @@
 
 <main>
   <div id="setupNotice" class="setup-panel" style="display:none;"></div>
+
   <div id="dashboard" style="display:none;">
 
-    <section class="block">
-      <div class="cards-row" id="statCards"></div>
+    <div class="overview-row" id="overviewRow"></div>
+
+    <!-- Movement 1 -->
+    <section class="m-section">
+      <div class="m-head"><span class="m-badge">01</span><span class="m-eyebrow">Movement 1</span></div>
+      <p class="m-question">수강하신 반을 선택해주세요.</p>
+      <div class="m-card"><canvas id="chartM1"></canvas></div>
     </section>
 
-    <section class="block">
-      <div class="block-title"><span class="dot"></span><h2>프로그램 전반 만족도</h2><span class="sub">1~5점 평균 · Movement 2</span></div>
-      <div class="charts-grid">
-        <div class="chart-card"><h3>세부 항목 평균 점수</h3><p class="desc">내용/구성, 강사 지도, 교육 기간, 운영·환경</p><canvas id="chartM2"></canvas></div>
-        <div class="chart-card"><h3>생활멘토 · 안전 · 편의</h3><p class="desc">Movement 3 세부 항목 평균</p><canvas id="chartM3"></canvas></div>
-      </div>
+    <!-- Movement 2 -->
+    <section class="m-section">
+      <div class="m-head"><span class="m-badge">02</span><span class="m-eyebrow">Movement 2</span></div>
+      <p class="m-question">프로그램 전반에 대한 만족도를 평가해주세요.</p>
+      <div class="m-card"><canvas id="chartM2"></canvas></div>
     </section>
 
-    <section class="block">
-      <div class="block-title"><span class="dot"></span><h2>운영 소통 &amp; 재참여 의향</h2><span class="sub">Movement 4 · Movement 9</span></div>
-      <div class="charts-grid">
-        <div class="chart-card"><h3>사전 안내 &amp; 학부모 소통</h3><p class="desc">신청·사전안내, 기간 중 소통 원활도</p><canvas id="chartM4"></canvas></div>
-        <div class="chart-card"><h3>재참여 · 추천 의향</h3><p class="desc">다시 참여 의향, 지인 추천 의향</p><canvas id="chartM9"></canvas></div>
-      </div>
+    <!-- Movement 3 -->
+    <section class="m-section">
+      <div class="m-head"><span class="m-badge">03</span><span class="m-eyebrow">Movement 3</span></div>
+      <p class="m-question">생활멘토 돌봄과 안전·편의 환경은 어떠했습니까?</p>
+      <div class="m-card"><canvas id="chartM3"></canvas></div>
     </section>
 
-    <section class="block">
-      <div class="block-title"><span class="dot"></span><h2>반 구성 &amp; 인기 과목</h2><span class="sub">Movement 1 · Movement 5</span></div>
-      <div class="charts-grid">
-        <div class="chart-card"><h3>응답자 반 구성</h3><p class="desc">A반(초등) / B반(중·고등)</p><canvas id="chartClass"></canvas></div>
-        <div class="chart-card"><h3>가장 만족스러웠던 과목</h3><p class="desc">중복 선택 응답 기준 집계</p><canvas id="chartSubject"></canvas></div>
-      </div>
+    <!-- Movement 4 -->
+    <section class="m-section">
+      <div class="m-head"><span class="m-badge">04</span><span class="m-eyebrow">Movement 4</span></div>
+      <p class="m-question">참가 전 안내와 학부모 소통은 원활했습니까?</p>
+      <div class="m-card"><canvas id="chartM4"></canvas></div>
     </section>
 
-    <section class="block">
-      <div class="block-title"><span class="dot"></span><h2>응답 추이</h2><span class="sub">시간순 누적 응답 수</span></div>
-      <div class="chart-card"><h3>기간별 누적 응답</h3><canvas id="chartTrend"></canvas></div>
+    <!-- Movement 5 -->
+    <section class="m-section">
+      <div class="m-head"><span class="m-badge">05</span><span class="m-eyebrow">Movement 5</span></div>
+      <p class="m-question">가장 만족스러웠던 과목은 무엇입니까? <span style="font-weight:400; font-size:13px; color:var(--ink-soft);">(중복 선택)</span></p>
+      <div class="m-card"><canvas id="chartM5"></canvas></div>
     </section>
 
-    <section class="block">
-      <div class="block-title"><span class="dot"></span><h2>주관식 응답</h2><span class="sub">최신순</span></div>
+    <!-- Movement 9 (grouped near 5 since both are "satisfaction outcome" style, but explicitly numbered) -->
+    <section class="m-section">
+      <div class="m-head"><span class="m-badge">09</span><span class="m-eyebrow">Movement 9</span></div>
+      <p class="m-question">다시 함께하고 싶으신가요?</p>
+      <div class="m-card"><canvas id="chartM9"></canvas></div>
+    </section>
+
+    <!-- Movements 6 / 7 / 8 / 10 : text responses -->
+    <section class="m-section">
+      <div class="m-head"><span class="m-badge">6·7</span><span class="m-eyebrow">주관식 응답</span><span class="m-eyebrow" style="margin-left:auto; color:var(--ink-soft);">Movement 6 · 7 · 8 · 10</span></div>
       <div class="tabs" id="responseTabs"></div>
+      <p class="sub-question" id="responseQuestionText"></p>
       <div class="response-list" id="responseList"></div>
+    </section>
+
+    <!-- Trend (bonus, not tied to a specific question) -->
+    <section class="m-section">
+      <div class="m-head"><span class="m-eyebrow" style="color:var(--ink-soft);">참고</span></div>
+      <p class="m-question" style="margin-left:0;">시간별 누적 응답 추이</p>
+      <div class="m-card"><canvas id="chartTrend"></canvas></div>
     </section>
 
   </div>
@@ -231,61 +208,73 @@
 
 <script>
 /* ============================================================
-   설정 (CONFIG) — 이 부분만 채워 넣으면 바로 동작합니다
+   설정 (CONFIG)
    ============================================================ */
 const CONFIG = {
-  // 구글 시트 URL 중 /d/ 와 /edit 사이의 긴 문자열
   SPREADSHEET_ID: '1kxpaC5aH_Nz0N38_Odccz21awfEZ8-JcE7ocZ-ZznnQ',
-
-  // 응답이 쌓이는 시트(탭) 이름
   SHEET_NAME: '시트1',
-
-  // 자동 새로고침 주기(초)
   REFRESH_INTERVAL_SEC: 30,
 
-  // 내부 필드 ↔ 실제 시트 헤더(1행) 이름 매핑
-  // 시트 헤더가 설문 문항 번호(1, 2-1~2-4, 3-1~3-3, 4-1~4-2, 5, 6, 7, 8, 9-1~9-2, 10)로
-  // 재구성되어 있다는 가정으로 반영했습니다. 실제 헤더 텍스트가 다르면(예: 구글시트가
-  // "2-1"을 날짜로 자동 변환한 경우) 아래 오른쪽 값만 실제 헤더 텍스트로 바꿔주세요.
+  // 내부 필드 ↔ 실제 시트 헤더(1행) 매핑. 시트 헤더를 설문 문항 번호로 재구성하신
+  // 것을 기준으로 매핑했습니다. 실제 헤더 텍스트가 다르면 오른쪽 값만 바꿔주세요.
   FIELD_MAP: {
-    timestamp:        '타임스탬프',
-    class:            '1',
-    m2_content:        '2-1',
-    m2_instructor:     '2-2',
-    m2_duration:       '2-3',
-    m2_facility:       '2-4',
-    m3_mentor:         '3-1',
-    m3_safety:         '3-2',
-    m3_meal:           '3-3',
-    m4_precomm:        '4-1',
-    m4_parentcomm:     '4-2',
-    best_subject:      '5',
-    reason:            '6',
-    future_subject:    '7',
-    artist:            '8',
-    m9_reapply:        '9-1',
-    m9_recommend:      '9-2',
-    feedback:          '10'
+    timestamp:     '타임스탬프',
+    m1_class:      '1',
+    m2_content:    '2-1',
+    m2_instructor: '2-2',
+    m2_duration:   '2-3',
+    m2_facility:   '2-4',
+    m3_mentor:     '3-1',
+    m3_safety:     '3-2',
+    m3_meal:       '3-3',
+    m4_precomm:    '4-1',
+    m4_parentcomm: '4-2',
+    m5_subject:    '5',
+    m6_reason:     '6',
+    m7_future:     '7',
+    m8_artist:     '8',
+    m9_reapply:    '9-1',
+    m9_recommend:  '9-2',
+    m10_feedback:  '10'
   }
 };
 /* ============================================================ */
 
-const LABELS = {
-  m2_content:'내용·구성', m2_instructor:'강사 지도', m2_duration:'교육 기간', m2_facility:'운영·환경',
-  m3_mentor:'생활멘토 돌봄', m3_safety:'안전관리', m3_meal:'식사·휴게공간',
-  m4_precomm:'사전 안내', m4_parentcomm:'학부모 소통',
-  m9_reapply:'재참여 의향', m9_recommend:'추천 의향'
-};
-const RESPONSE_TABS = [
-  {key:'reason', label:'과목 선택 이유'},
-  {key:'future_subject', label:'심화 희망 분야'},
-  {key:'artist', label:'추천 아티스트'},
-  {key:'feedback', label:'건의사항'}
+// Every entry here corresponds 1:1 to an actual survey question (survey_final.html).
+// field: internal key, q: exact question text as shown in the survey, short: chart axis label
+const M2_ITEMS = [
+  { field:'m2_content',    q:'2-1. 프로그램 내용 및 구성이 유익했습니까?',              short:'내용·구성' },
+  { field:'m2_instructor', q:'2-2. 강사진의 지도 방식은 만족스러웠습니까?',              short:'강사 지도' },
+  { field:'m2_duration',   q:'2-3. 교육 기간(3일)은 적절했습니까?',                     short:'교육 기간' },
+  { field:'m2_facility',   q:'2-4. 전반적인 운영 및 환경(시설/진행)은 어떠했습니까?',      short:'운영·환경' }
+];
+const M3_ITEMS = [
+  { field:'m3_mentor', q:'3-1. 생활멘토(담당 선생님)의 돌봄과 소통은 어떠셨습니까?',        short:'생활멘토 돌봄' },
+  { field:'m3_safety', q:'3-2. 현장 안전관리 및 비상 상황 대응 체계는 믿음직했습니까?',       short:'안전관리' },
+  { field:'m3_meal',   q:'3-3. 식사 및 휴게 공간 이용은 만족스러웠습니까?',               short:'식사·휴게공간' }
+];
+const M4_ITEMS = [
+  { field:'m4_precomm',    q:'4-1. 워크숍 신청 및 사전 안내(일정·장소·준비물 등)는 충분했습니까?', short:'사전 안내' },
+  { field:'m4_parentcomm', q:'4-2. 워크숍 기간 중 학부모 대상 소통(연락, 공지사항 전달)은 원활했습니까?', short:'학부모 소통' }
+];
+const M9_ITEMS = [
+  { field:'m9_reapply',   q:'9-1. 다음에 유사한 워크숍이 열린다면 다시 참여하고 싶으십니까?', short:'재참여 의향' },
+  { field:'m9_recommend', q:'9-2. 주변 지인에게 이 워크숍을 추천하고 싶으십니까?',           short:'추천 의향' }
+];
+
+// Movements 6, 7, 8, 10 — text responses, exact question text preserved
+const TEXT_MOVEMENTS = [
+  { key:'m6_reason',   num:'06', label:'Movement 6',  question:'해당 과목이 좋았던 이유는 무엇입니까?' },
+  { key:'m7_future',   num:'07', label:'Movement 7',  question:'추후 겨울캠프에서 배우고 싶은 무용 분야나 세부 과목은 무엇입니까?' },
+  { key:'m8_artist',   num:'08', label:'Movement 8',  question:'향후 겨울캠프에서 꼭 만나보고 싶은 국내외 아티스트가 있다면 추천해주세요.' },
+  { key:'m10_feedback',num:'10', label:'Movement 10', question:'기타 본 프로그램에 대한 개선점이나 건의사항이 있다면 자유롭게 작성해주세요.' }
 ];
 
 let charts = {};
 let allRows = [];
-let currentTab = RESPONSE_TABS[0].key;
+let currentTextMovement = TEXT_MOVEMENTS[0].key;
+
+const NAVY = '#2f4f62', GOLD = '#eec97a', GOLD_DEEP = '#c9973f', LINE = '#e7ddc4', INK_SOFT = '#6b6459';
 
 function gvizUrl(){
   return `https://docs.google.com/spreadsheets/d/${CONFIG.SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(CONFIG.SHEET_NAME)}&_=${Date.now()}`;
@@ -299,7 +288,7 @@ async function fetchSheet(){
   const end = text.lastIndexOf('}');
   if(start === -1 || end === -1) throw new Error('시트 데이터를 해석할 수 없습니다. 시트 이름 또는 공유 설정을 확인해주세요.');
   const json = JSON.parse(text.substring(start, end + 1));
-  const cols = json.table.cols.map((c, i) => (c.label && c.label.trim()) || (c.id) || ('col' + i));
+  const cols = json.table.cols.map((c, i) => (c.label && c.label.trim()) || c.id || ('col' + i));
   const rows = json.table.rows.map(r => (r.c || []).map(cell => {
     if(!cell) return '';
     if(cell.f !== undefined && cell.f !== null) return cell.f;
@@ -320,10 +309,7 @@ function mapRow(raw){
   return out;
 }
 
-function toNum(v){
-  const n = parseFloat(v);
-  return isNaN(n) ? null : n;
-}
+function toNum(v){ const n = parseFloat(v); return isNaN(n) ? null : n; }
 
 function avg(rows, field){
   const nums = rows.map(r => toNum(r[field])).filter(n => n !== null);
@@ -353,115 +339,10 @@ function countMulti(rows, field, delimiter=','){
   return counts;
 }
 
-function makeChart(ctx, type, data, options){
-  if(charts[ctx.canvas.id]){ charts[ctx.canvas.id].destroy(); }
-  charts[ctx.canvas.id] = new Chart(ctx, {type, data, options});
-  return charts[ctx.canvas.id];
-}
-
-const NAVY = '#2f4f62', GOLD = '#eec97a', GOLD_DEEP = '#c9973f', LINE = '#e7ddc4', INK_SOFT = '#6b6459';
-
-function renderStatCards(rows){
-  const total = rows.length;
-  const aCount = rows.filter(r => (r.class||'').includes('A')).length;
-  const bCount = rows.filter(r => (r.class||'').includes('B')).length;
-  const allScaleFields = ['m2_content','m2_instructor','m2_duration','m2_facility','m3_mentor','m3_safety','m3_meal','m4_precomm','m4_parentcomm'];
-  let sum = 0, cnt = 0;
-  allScaleFields.forEach(f=>{
-    rows.forEach(r=>{ const n = toNum(r[f]); if(n!==null){ sum += n; cnt++; } });
-  });
-  const overallAvg = cnt ? (sum/cnt) : null;
-  const reapply = avg(rows, 'm9_reapply');
-  const recommend = avg(rows, 'm9_recommend');
-
-  const cards = [
-    {label:'총 응답 수', value: total, unit:'건'},
-    {label:'A반 / B반', value: `${aCount} / ${bCount}`, unit:''},
-    {label:'전체 만족도 평균', value: overallAvg ? overallAvg.toFixed(2) : '-', unit:'/ 5.0'},
-    {label:'재참여 의향', value: reapply ? reapply.toFixed(2) : '-', unit:'/ 5.0'},
-    {label:'추천 의향', value: recommend ? recommend.toFixed(2) : '-', unit:'/ 5.0'},
-  ];
-
-  document.getElementById('statCards').innerHTML = cards.map(c => `
-    <div class="stat-card">
-      <div class="stat-label">${c.label}</div>
-      <div class="stat-value">${c.value}<small>${c.unit}</small></div>
-    </div>
-  `).join('');
-}
-
-function renderBarChart(canvasId, fields, rows){
-  const canvas = document.getElementById(canvasId);
-  const hasAnyData = fields.some(f => avg(rows, f) !== null);
-  if(!hasAnyData){
-    canvas.parentElement.querySelector('.no-data')?.remove();
-    canvas.style.display = 'none';
-    const note = document.createElement('div');
-    note.className = 'no-data';
-    note.textContent = '아직 이 항목의 응답 데이터가 시트에 없습니다. (설문 백엔드에 해당 컬럼이 추가되면 자동으로 표시됩니다)';
-    canvas.insertAdjacentElement('afterend', note);
-    return;
-  }
-  canvas.style.display = '';
-  canvas.parentElement.querySelector('.no-data')?.remove();
-  const ctx = canvas.getContext('2d');
-  const labels = fields.map(f => LABELS[f] || f);
-  const values = fields.map(f => { const a = avg(rows, f); return a ? +a.toFixed(2) : 0; });
-  makeChart(ctx, 'bar', {
-    labels,
-    datasets:[{
-      data: values,
-      backgroundColor: GOLD,
-      borderColor: GOLD_DEEP,
-      borderWidth:1,
-      borderRadius:4,
-      maxBarThickness:56
-    }]
-  }, {
-    responsive:true,
-    plugins:{legend:{display:false}, tooltip:{callbacks:{label: c=>` 평균 ${c.raw}점`}}},
-    scales:{
-      y:{min:0, max:5, ticks:{stepSize:1, color:INK_SOFT}, grid:{color:LINE}},
-      x:{ticks:{color:'#211d1a', font:{size:11}}, grid:{display:false}}
-    }
-  });
-}
-
-function renderClassChart(rows){
-  const counts = countBy(rows, 'class');
-  const ctx = document.getElementById('chartClass').getContext('2d');
-  makeChart(ctx, 'doughnut', {
-    labels: Object.keys(counts),
-    datasets:[{data:Object.values(counts), backgroundColor:[NAVY, GOLD], borderColor:'#fff', borderWidth:2}]
-  }, {
-    responsive:true,
-    plugins:{legend:{position:'bottom', labels:{color:'#211d1a', font:{size:12}}}}
-  });
-}
-
-function renderSubjectChart(rows){
-  const counts = countMulti(rows, 'best_subject');
-  const entries = Object.entries(counts).sort((a,b)=>b[1]-a[1]);
-  const ctx = document.getElementById('chartSubject').getContext('2d');
-  makeChart(ctx, 'bar', {
-    labels: entries.map(e=>e[0]),
-    datasets:[{data:entries.map(e=>e[1]), backgroundColor:NAVY, borderRadius:4, maxBarThickness:36}]
-  }, {
-    indexAxis:'y',
-    responsive:true,
-    plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>` ${c.raw}명 선택`}}},
-    scales:{
-      x:{beginAtZero:true, ticks:{stepSize:1, color:INK_SOFT}, grid:{color:LINE}},
-      y:{ticks:{color:'#211d1a', font:{size:11}}, grid:{display:false}}
-    }
-  });
-}
-
 function parseSheetDate(v){
   if(!v) return null;
   if(v instanceof Date) return isNaN(v) ? null : v;
   const str = v.toString().trim();
-  // Korean Sheets locale: "2026. 7. 19 오후 2:53:13"
   const kr = str.match(/^(\d{4})\.\s*(\d{1,2})\.\s*(\d{1,2})\s+(오전|오후)\s+(\d{1,2}):(\d{2})(?::(\d{2}))?$/);
   if(kr){
     let [, y, mo, d, ampm, h, mi, se] = kr;
@@ -475,13 +356,131 @@ function parseSheetDate(v){
   return isNaN(generic) ? null : generic;
 }
 
-function renderTrendChart(rows){
-  const withDates = rows.map(r=>parseSheetDate(r.timestamp)).filter(Boolean);
-  const ctx = document.getElementById('chartTrend').getContext('2d');
-  if(!withDates.length){
-    ctx.canvas.parentElement.innerHTML = '<div class="no-data">타임스탬프 데이터가 없어 추이를 표시할 수 없습니다.</div>';
+function makeChart(canvasId, type, data, options){
+  const el = document.getElementById(canvasId);
+  if(!el) return null;
+  if(charts[canvasId]){ charts[canvasId].destroy(); }
+  charts[canvasId] = new Chart(el.getContext('2d'), {type, data, options});
+  return charts[canvasId];
+}
+
+function resetChartCard(canvasId, message){
+  const el = document.getElementById(canvasId);
+  if(!el) return;
+  if(charts[canvasId]){ charts[canvasId].destroy(); delete charts[canvasId]; }
+  el.style.display = 'none';
+  const parent = el.parentElement;
+  parent.querySelector('.no-data')?.remove();
+  const note = document.createElement('div');
+  note.className = 'no-data';
+  note.textContent = message;
+  el.insertAdjacentElement('afterend', note);
+}
+
+function restoreChartCanvas(canvasId){
+  const el = document.getElementById(canvasId);
+  if(!el) return;
+  el.style.display = '';
+  el.parentElement.querySelector('.no-data')?.remove();
+}
+
+/* ---------- overview ---------- */
+function renderOverview(rows){
+  const total = rows.length;
+  const aCount = rows.filter(r => (r.m1_class||'').includes('A')).length;
+  const bCount = rows.filter(r => (r.m1_class||'').includes('B')).length;
+
+  const allScaleFields = [...M2_ITEMS, ...M3_ITEMS, ...M4_ITEMS].map(i=>i.field);
+  let sum = 0, cnt = 0;
+  allScaleFields.forEach(f => rows.forEach(r => { const n = toNum(r[f]); if(n!==null){ sum+=n; cnt++; } }));
+  const overallAvg = cnt ? sum/cnt : null;
+
+  const reapply = avg(rows, 'm9_reapply');
+  const recommend = avg(rows, 'm9_recommend');
+
+  const cards = [
+    {label:'총 응답 수', value:total, unit:'건'},
+    {label:'A반 / B반', value:`${aCount} / ${bCount}`, unit:''},
+    {label:'전체 만족도 평균', value: overallAvg ? overallAvg.toFixed(2) : '-', unit:'/ 5.0'},
+    {label:'재참여 의향', value: reapply ? reapply.toFixed(2) : '-', unit:'/ 5.0'},
+    {label:'추천 의향', value: recommend ? recommend.toFixed(2) : '-', unit:'/ 5.0'}
+  ];
+
+  document.getElementById('overviewRow').innerHTML = cards.map(c => `
+    <div class="stat-card">
+      <div class="stat-label">${c.label}</div>
+      <div class="stat-value">${c.value}<small>${c.unit}</small></div>
+    </div>
+  `).join('');
+}
+
+/* ---------- Movement 1 : class split ---------- */
+function renderM1(rows){
+  const counts = countBy(rows, 'm1_class');
+  if(!Object.keys(counts).length){ resetChartCard('chartM1', '아직 응답 데이터가 없습니다.'); return; }
+  restoreChartCanvas('chartM1');
+  makeChart('chartM1', 'doughnut', {
+    labels: Object.keys(counts),
+    datasets:[{data:Object.values(counts), backgroundColor:[NAVY, GOLD], borderColor:'#fff', borderWidth:2}]
+  }, {
+    responsive:true,
+    plugins:{legend:{position:'bottom', labels:{color:'#211d1a', font:{size:12}}}}
+  });
+}
+
+/* ---------- generic scale bar chart for a set of items ---------- */
+function renderScaleChart(canvasId, items, rows){
+  const hasAnyData = items.some(it => avg(rows, it.field) !== null);
+  if(!hasAnyData){
+    resetChartCard(canvasId, '아직 이 문항의 응답 데이터가 시트에 없습니다. (해당 컬럼이 시트에 추가되면 자동으로 표시됩니다)');
     return;
   }
+  restoreChartCanvas(canvasId);
+  const values = items.map(it => { const a = avg(rows, it.field); return a ? +a.toFixed(2) : 0; });
+  makeChart(canvasId, 'bar', {
+    labels: items.map(it => it.short),
+    datasets:[{ data: values, backgroundColor:GOLD, borderColor:GOLD_DEEP, borderWidth:1, borderRadius:4, maxBarThickness:56 }]
+  }, {
+    responsive:true,
+    plugins:{
+      legend:{display:false},
+      tooltip:{ callbacks:{
+        title: (ctx) => items[ctx[0].dataIndex].q,
+        label: (ctx) => ` 평균 ${ctx.raw}점`
+      }}
+    },
+    scales:{
+      y:{min:0, max:5, ticks:{stepSize:1, color:INK_SOFT}, grid:{color:LINE}},
+      x:{ticks:{color:'#211d1a', font:{size:11}}, grid:{display:false}}
+    }
+  });
+}
+
+/* ---------- Movement 5 : subject popularity (multi-select) ---------- */
+function renderM5(rows){
+  const counts = countMulti(rows, 'm5_subject');
+  const entries = Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+  if(!entries.length){ resetChartCard('chartM5', '아직 응답 데이터가 없습니다.'); return; }
+  restoreChartCanvas('chartM5');
+  makeChart('chartM5', 'bar', {
+    labels: entries.map(e=>e[0]),
+    datasets:[{data:entries.map(e=>e[1]), backgroundColor:NAVY, borderRadius:4, maxBarThickness:32}]
+  }, {
+    indexAxis:'y',
+    responsive:true,
+    plugins:{legend:{display:false}, tooltip:{callbacks:{label:c=>` ${c.raw}명 선택`}}},
+    scales:{
+      x:{beginAtZero:true, ticks:{stepSize:1, color:INK_SOFT}, grid:{color:LINE}},
+      y:{ticks:{color:'#211d1a', font:{size:11}}, grid:{display:false}}
+    }
+  });
+}
+
+/* ---------- trend (bonus) ---------- */
+function renderTrend(rows){
+  const withDates = rows.map(r=>parseSheetDate(r.timestamp)).filter(Boolean);
+  if(!withDates.length){ resetChartCard('chartTrend', '타임스탬프 데이터가 없어 추이를 표시할 수 없습니다.'); return; }
+  restoreChartCanvas('chartTrend');
   withDates.sort((a,b)=>a-b);
   const byDay = {};
   withDates.forEach(d=>{
@@ -491,30 +490,24 @@ function renderTrendChart(rows){
   const days = Object.keys(byDay).sort();
   let cum = 0;
   const cumValues = days.map(d => { cum += byDay[d]; return cum; });
-  makeChart(ctx, 'line', {
+  makeChart('chartTrend', 'line', {
     labels: days,
-    datasets:[{
-      label:'누적 응답 수', data: cumValues,
-      borderColor:GOLD_DEEP, backgroundColor:'rgba(238,201,122,0.18)',
-      fill:true, tension:.3, pointRadius:3, pointBackgroundColor:GOLD_DEEP
-    }]
+    datasets:[{ label:'누적 응답 수', data:cumValues, borderColor:GOLD_DEEP, backgroundColor:'rgba(238,201,122,0.18)', fill:true, tension:.3, pointRadius:3, pointBackgroundColor:GOLD_DEEP }]
   }, {
     responsive:true,
     plugins:{legend:{display:false}},
-    scales:{
-      y:{beginAtZero:true, ticks:{color:INK_SOFT}, grid:{color:LINE}},
-      x:{ticks:{color:INK_SOFT, font:{size:11}}, grid:{display:false}}
-    }
+    scales:{ y:{beginAtZero:true, ticks:{color:INK_SOFT}, grid:{color:LINE}}, x:{ticks:{color:INK_SOFT, font:{size:11}}, grid:{display:false}} }
   });
 }
 
+/* ---------- text-response movements (6, 7, 8, 10) ---------- */
 function renderResponseTabs(){
-  document.getElementById('responseTabs').innerHTML = RESPONSE_TABS.map(t => `
-    <button class="tab-btn ${t.key===currentTab?'active':''}" data-key="${t.key}">${t.label}</button>
+  document.getElementById('responseTabs').innerHTML = TEXT_MOVEMENTS.map(m => `
+    <button class="tab-btn ${m.key===currentTextMovement?'active':''}" data-key="${m.key}">${m.label}</button>
   `).join('');
   document.querySelectorAll('.tab-btn').forEach(btn=>{
     btn.addEventListener('click', ()=>{
-      currentTab = btn.getAttribute('data-key');
+      currentTextMovement = btn.getAttribute('data-key');
       renderResponseTabs();
       renderResponseList(allRows);
     });
@@ -522,12 +515,11 @@ function renderResponseTabs(){
 }
 
 function renderResponseList(rows){
-  const items = rows.slice().reverse().map(r => (r[currentTab]||'').toString().trim()).filter(Boolean);
+  const movement = TEXT_MOVEMENTS.find(m => m.key === currentTextMovement);
+  document.getElementById('responseQuestionText').textContent = movement ? movement.question : '';
+  const items = rows.slice().reverse().map(r => (r[currentTextMovement]||'').toString().trim()).filter(Boolean);
   const el = document.getElementById('responseList');
-  if(!items.length){
-    el.innerHTML = '<div class="no-data">아직 응답이 없습니다.</div>';
-    return;
-  }
+  if(!items.length){ el.innerHTML = '<div class="no-data">아직 응답이 없습니다.</div>'; return; }
   el.innerHTML = items.map(text => `<div class="response-item">${escapeHtml(text)}</div>`).join('');
 }
 
@@ -535,6 +527,7 @@ function escapeHtml(str){
   return str.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 }
 
+/* ---------- setup / error notice ---------- */
 function showSetupNotice(message){
   const panel = document.getElementById('setupNotice');
   panel.style.display = 'block';
@@ -547,13 +540,13 @@ function showSetupNotice(message){
       <li>설문 응답이 쌓이는 구글 시트를 엽니다.</li>
       <li>주소창 URL에서 <code>/d/</code> 와 <code>/edit</code> 사이의 긴 문자열을 복사해 <code>SPREADSHEET_ID</code>에 붙여넣습니다.</li>
       <li>응답이 쌓이는 시트 하단 탭 이름을 <code>SHEET_NAME</code>에 정확히 입력합니다.</li>
-      <li>시트 오른쪽 상단 <b>공유</b> → "링크가 있는 모든 사용자" → <b>뷰어</b> 권한으로 설정합니다. (실시간 조회를 위해 필요, 편집 권한 아님)</li>
-      <li>파일을 저장하고 새로고침하면 자동으로 연결됩니다.</li>
+      <li>시트 오른쪽 상단 <b>공유</b> → "링크가 있는 모든 사용자" → <b>뷰어</b> 권한으로 설정합니다.</li>
     </ol>
-    <p>실제 시트의 첫 번째 행(헤더)이 문항 번호(예: <code>2-1</code>)와 다르게 표시되어 있다면(예: 날짜로 자동 변환된 경우), <code>FIELD_MAP</code>의 오른쪽 값을 실제 헤더 텍스트로 바꿔주세요.</p>
+    <p>실제 시트 헤더가 문항 번호(예: <code>2-1</code>)와 다르게 표시되어 있다면(날짜로 자동 변환된 경우 등), <code>FIELD_MAP</code>의 오른쪽 값을 실제 헤더 텍스트로 바꿔주세요.</p>
   `;
 }
 
+/* ---------- main load ---------- */
 async function loadData(isManual){
   const btn = document.getElementById('refreshBtn');
   if(isManual) btn.classList.add('spinning');
@@ -577,30 +570,22 @@ async function loadData(isManual){
   document.getElementById('setupNotice').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
 
-  const chartLibMissing = typeof Chart === 'undefined';
-  const safe = (fn, label) => {
-    try{ fn(); }
-    catch(e){
-      console.error('렌더링 실패: ' + label, e);
-    }
-  };
+  const safe = (fn, label) => { try{ fn(); } catch(e){ console.error('렌더링 실패: ' + label, e); } };
 
-  safe(() => renderStatCards(allRows), '요약 카드');
+  safe(() => renderOverview(allRows), '개요');
 
-  if(chartLibMissing){
-    document.querySelectorAll('.chart-card canvas').forEach(c=>{
-      const h3 = c.parentElement.querySelector('h3');
-      const title = h3 ? h3.textContent : '';
-      c.parentElement.innerHTML = (title ? '<h3>' + title + '</h3>' : '') + '<div class="no-data">차트 라이브러리(Chart.js)를 불러오지 못했습니다. 인터넷 연결을 확인해주세요.</div>';
+  if(typeof Chart === 'undefined'){
+    ['chartM1','chartM2','chartM3','chartM4','chartM5','chartM9','chartTrend'].forEach(id=>{
+      resetChartCard(id, '차트 라이브러리(Chart.js)를 불러오지 못했습니다. 인터넷 연결을 확인해주세요.');
     });
   } else {
-    safe(() => renderBarChart('chartM2', ['m2_content','m2_instructor','m2_duration','m2_facility'], allRows), 'Movement2 차트');
-    safe(() => renderBarChart('chartM3', ['m3_mentor','m3_safety','m3_meal'], allRows), 'Movement3 차트');
-    safe(() => renderBarChart('chartM4', ['m4_precomm','m4_parentcomm'], allRows), 'Movement4 차트');
-    safe(() => renderBarChart('chartM9', ['m9_reapply','m9_recommend'], allRows), 'Movement9 차트');
-    safe(() => renderClassChart(allRows), '반 구성 차트');
-    safe(() => renderSubjectChart(allRows), '과목 인기 차트');
-    safe(() => renderTrendChart(allRows), '응답 추이 차트');
+    safe(() => renderM1(allRows), 'Movement 1');
+    safe(() => renderScaleChart('chartM2', M2_ITEMS, allRows), 'Movement 2');
+    safe(() => renderScaleChart('chartM3', M3_ITEMS, allRows), 'Movement 3');
+    safe(() => renderScaleChart('chartM4', M4_ITEMS, allRows), 'Movement 4');
+    safe(() => renderM5(allRows), 'Movement 5');
+    safe(() => renderScaleChart('chartM9', M9_ITEMS, allRows), 'Movement 9');
+    safe(() => renderTrend(allRows), '응답 추이');
   }
 
   safe(() => { renderResponseTabs(); renderResponseList(allRows); }, '주관식 응답');
@@ -610,7 +595,6 @@ async function loadData(isManual){
 }
 
 document.getElementById('refreshBtn').addEventListener('click', ()=>loadData(true));
-
 loadData(false);
 if(CONFIG.REFRESH_INTERVAL_SEC > 0){
   setInterval(()=>loadData(false), CONFIG.REFRESH_INTERVAL_SEC * 1000);
